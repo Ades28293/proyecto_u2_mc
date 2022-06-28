@@ -51,25 +51,25 @@ public class ProyectoU2McApplication implements CommandLineRunner{
 //		LOGGER.info(this.iPersonaJdbcService.buscar(2));
 		
 		Estudiante e =new Estudiante();
-		e.setId(2);
-		e.setNombre("Erick");
-		e.setApellido("Quishpe");
+		e.setId(1);
+		e.setNombre("Maria");
+		e.setApellido("Magdalena");
 		e.setEdad(22);
 		e.setDireccion("Quito");
-	//	this.iEstudianteJdbcService.guardar(e);
+		this.iEstudianteJdbcService.guardar(e);
 		
 		Estudiante e1=new Estudiante();
 		e1.setId(2);
-		e1.setNombre("Luis");
+		e1.setNombre("Juan");
 		e1.setApellido("Quishpe");
 		e1.setEdad(22);
 		e1.setDireccion("Quito");
 		//Actualizar
-		//this.iEstudianteJdbcService.actualizar(e1);
+		this.iEstudianteJdbcService.actualizar(e1);
 		
 		
 		//Eliminar
-		//this.iEstudianteJdbcService.eliminar(1);
+		this.iEstudianteJdbcService.eliminar(1);
 		
 		//Buscar
 		LOGGER.info(this.iEstudianteJdbcService.buscar(2));

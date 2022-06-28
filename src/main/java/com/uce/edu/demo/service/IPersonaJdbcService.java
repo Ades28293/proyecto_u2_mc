@@ -10,6 +10,6 @@ public interface IPersonaJdbcService {
 
 	public void eliminar(int id);
 
-	public void buscar(int id);
+	public Persona buscar(int id);
 
 }

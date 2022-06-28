@@ -32,9 +32,8 @@ public class PersonaJdbcServiceImpl implements IPersonaJdbcService{
 	}
 
 	@Override
-	public void buscar(int id) {
-		// TODO Auto-generated method stub
-		this.iPersonaJdbcRepository.buscarId(id);
+	public Persona buscar(int id) {
+		return this.iPersonaJdbcRepository.buscarId(id);
 	}
 
 }

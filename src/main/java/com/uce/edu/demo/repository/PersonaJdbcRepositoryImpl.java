@@ -11,7 +11,7 @@ import com.uce.edu.demo.to.Persona;
 
 @Repository
 public class PersonaJdbcRepositoryImpl implements IPersonaJdbcRepository {
-	private static final Logger LOGGER = LoggerFactory.getLogger(PersonaJdbcRepositoryImpl.class);
+	
 
 	// Inyeccion jdbc
 	@Autowired
@@ -21,7 +21,7 @@ public class PersonaJdbcRepositoryImpl implements IPersonaJdbcRepository {
 	@Override
 	public Persona buscarId(int id) {
 		// TODO Auto-generated method stub
-		LOGGER.info("Se busco el usuario:"+ id);
+		
 		return this.jdbcTemplate.queryForObject("select * from persona WHERE id=?", new Object[] { id },
 				new BeanPropertyRowMapper<Persona>(Persona.class));
 	}
@@ -44,7 +44,7 @@ public class PersonaJdbcRepositoryImpl implements IPersonaJdbcRepository {
 	@Override
 	public void eliminar(int id) {
 		// TODO Auto-generated method stub
-		LOGGER.info("Se elimine el usuario:"+ id);
+
 		this.jdbcTemplate.update("delete from persona where id=?", new Object[] { id });
 	}
 }

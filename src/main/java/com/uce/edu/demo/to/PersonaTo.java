@@ -1,18 +1,18 @@
 package com.uce.edu.demo.to;
 
-public class Persona {
+public class PersonaTo {
 	private int id;
 	private String nombre;
 	private String apellido;
 	
 	
 	//Constructor por defecto siempre se lo pone si tengo otro constructor
-	public Persona() {
+	public PersonaTo() {
 		
 	}
 	
 	//Contructor que creamos con atributos
-	public Persona(int id, String nombre, String apellido) {
+	public PersonaTo(int id, String nombre, String apellido) {
 		super();
 		this.id = id;
 		this.nombre = nombre;

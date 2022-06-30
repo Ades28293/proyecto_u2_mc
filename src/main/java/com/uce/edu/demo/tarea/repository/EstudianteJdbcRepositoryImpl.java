@@ -1,4 +1,4 @@
-package com.uce.edu.demo.repository;
+package com.uce.edu.demo.tarea.repository;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.uce.edu.demo.ProyectoU2McApplication;
-import com.uce.edu.demo.to.Estudiante;
+import com.uce.edu.demo.tarea.to.EstudianteTo;
 
 @Repository
 public class EstudianteJdbcRepositoryImpl implements IEstudianteJdbcRepository{
@@ -20,16 +19,16 @@ public class EstudianteJdbcRepositoryImpl implements IEstudianteJdbcRepository{
 	
 
 	@Override
-	public Estudiante buscar(int id) {
+	public EstudianteTo buscar(int id) {
 		// TODO Auto-generated method stub
 		LOGGER.info("Se ha buscado por id: "+id);
 		
 		return this.jdbcTemplate.queryForObject("select * from estudiante where id=?", new Object[] {id},
-				new BeanPropertyRowMapper<Estudiante>(Estudiante.class));
+				new BeanPropertyRowMapper<EstudianteTo>(EstudianteTo.class));
 	}
 
 	@Override
-	public void insertar(Estudiante e) {
+	public void insertar(EstudianteTo e) {
 		// TODO Auto-generated method stub
 		LOGGER.info("Se ha insertado el estudiante: "+e);
 		this.jdbcTemplate.update("insert into estudiante (id,nombre,apellido,edad,direccion) values (?,?,?,?,?)",
@@ -38,7 +37,7 @@ public class EstudianteJdbcRepositoryImpl implements IEstudianteJdbcRepository{
 	}
 
 	@Override
-	public void actualizar(Estudiante e) {
+	public void actualizar(EstudianteTo e) {
 		// TODO Auto-generated method stub
 		LOGGER.info("Se ha actualizado el estudiante: "+e);
 		this.jdbcTemplate.update("update estudiante set nombre=?,apellido=?,edad=?,direccion=? where id=?",

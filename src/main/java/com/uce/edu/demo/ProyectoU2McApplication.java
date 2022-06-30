@@ -6,9 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.uce.edu.demo.repository.modelo.Persona;
-import com.uce.edu.demo.service.IEstudianteJdbcService;
 import com.uce.edu.demo.service.IPersonaJdbcService;
 import com.uce.edu.demo.service.IPersonaJpaService;
+import com.uce.edu.demo.tarea.repository.IEstudianteJpaRepository;
+import com.uce.edu.demo.tarea.repository.modelo.Estudiante;
+import com.uce.edu.demo.tarea.service.IEstudianteJdbcService;
+import com.uce.edu.demo.tarea.service.IEstudianteJpaService;
 
 
 @SpringBootApplication
@@ -23,6 +26,9 @@ public class ProyectoU2McApplication implements CommandLineRunner{
 	
 	@Autowired
 	private IPersonaJpaService iPersonaJpaService;
+	
+	@Autowired
+	private IEstudianteJpaService iEstudianteJpaService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU2McApplication.class, args);
@@ -30,31 +36,36 @@ public class ProyectoU2McApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-	//	LOGGER.info("Lista:"+this.iPersonaJdbcService.buscarTodos());
+	
+		//Estudiante
+		//Buscar
+		//LOGGER.info(this.iEstudianteJpaService.buscar(2));		
 		
-		LOGGER.info("Dato con Jpa: "+this.iPersonaJpaService.buscar(2));
 		
-		Persona per=new Persona();
-		per.setId(7);
-		per.setNombre("Zhong");
-		per.setApellido("Cen");
+		Estudiante e= new Estudiante();
+		e.setId(4);
+		e.setNombre("Maria");
+		e.setApellido("Diaz");
+		e.setEdad(22);
+		e.setDireccion("Quito");
 		
-		//Guardar
-		//this.iPersonaJpaService.guardar(per);
+		//Insertar
+		//this.iEstudianteJpaService.insertar(e);
 		
-		Persona per1=new Persona();
-		per1.setId(2);
-		per1.setNombre("Andre");
-		per1.setApellido("Solis");
 		
-		//Actualizacion
-		//this.iPersonaJpaService.actualizar(per1);
-
+		Estudiante e1= new Estudiante();
+		e1.setId(2);
+		e1.setNombre("Luisa");
+		e1.setApellido("Magdalena");
+		e1.setEdad(21);
+		e1.setDireccion("Quito");
+		
+		//Actualizar
+		//this.iEstudianteJpaService.actualizar(e1);
+		
+		
 		//Eliminar
-		this.iPersonaJpaService.eliminar(1);
-		
-		
-		
+		//this.iEstudianteJpaService.eliminar(1);
 		
 	}
 

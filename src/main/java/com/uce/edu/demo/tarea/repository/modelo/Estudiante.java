@@ -1,34 +1,31 @@
-package com.uce.edu.demo.to;
+package com.uce.edu.demo.tarea.repository.modelo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name= "estudiante")
 public class Estudiante {
-	private int id;
+	@Id //primary key
+	@Column(name="id")
+	private Integer id;
+	
+	@Column(name="nombre")
 	private String nombre;
+	
+	@Column(name="apellido")
 	private String apellido;
-	private int edad;
-	private String direccion;
 	
-	public Estudiante() {
-		
-	}
+	@Column(name="edad")
+	private Integer  edad;
 	
-	
-	public Estudiante(int id, String nombre, String apellido, int edad, String direccion) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.edad = edad;
-		this.direccion = direccion;
-	}
-
-
-
-
-	//Set y Get
-	public int getId() {
+	//Set y get 
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getNombre() {
@@ -43,10 +40,10 @@ public class Estudiante {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public int getEdad() {
+	public Integer getEdad() {
 		return edad;
 	}
-	public void setEdad(int edad) {
+	public void setEdad(Integer edad) {
 		this.edad = edad;
 	}
 	public String getDireccion() {
@@ -55,7 +52,8 @@ public class Estudiante {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	
+	private String direccion;
+
 	
 	@Override
 	public String toString() {
@@ -63,9 +61,6 @@ public class Estudiante {
 				+ ", direccion=" + direccion + "]";
 	}
 	
-
 	
 	
-	
-
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.uce.edu.demo.repository.modelo.Persona;
 
 public interface IPersonaJpaRepository {
+	
 	public Persona buscarId(Integer id);
 
 	public void insertar(Persona persona);
@@ -12,6 +13,12 @@ public interface IPersonaJpaRepository {
 	public void actualizar(Persona persona);
 
 	public void eliminar(Integer id);
+	
+	public Persona buscarPorCedula(String cedula);
+	
+	public  List<Persona> buscarApellido(String apellido);
+	
+	public List<Persona> buscarGenero(String genero);
 	
 	
 

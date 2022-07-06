@@ -1,4 +1,6 @@
 package com.uce.edu.demo;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -6,7 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.uce.edu.demo.repository.modelo.Persona;
-
 import com.uce.edu.demo.service.IPersonaJdbcService;
 import com.uce.edu.demo.service.IPersonaJpaService;
 
@@ -32,18 +33,29 @@ public class ProyectoU2McApplication implements CommandLineRunner{
 		//Buscar
 		//LOGGER.info("Dato con Jpa: "+this.iPersonaJpaService.buscar(2));
 		
+		//LOGGER.info("Dato con Jpa: "+this.iPersonaJpaService.buscarPorCedula("1720757101"))
+
+		List<Persona> listaPersona=this.iPersonaJpaService.buscarApellido("Perez");
+		for(Persona item:listaPersona ) {
+			
+			LOGGER.info("Persona:"+ item);
+		}
+		
 		Persona per=new Persona();
 		//per.setId(1);
-		per.setNombre("Pepito");
+		per.setNombre("Jose");
 		per.setApellido("Perez");
+		per.setGenero("M");
+		per.setCedula("1720757102");
 		
 		//Guardar
-		this.iPersonaJpaService.guardar(per);
+		//this.iPersonaJpaService.guardar(per);
 		
 		Persona per1=new Persona();
 		per1.setId(2);
 		per1.setNombre("Andre");
 		per1.setApellido("Solis");
+		
 		
 		//Actualizacion
 		//this.iPersonaJpaService.actualizar(per1);

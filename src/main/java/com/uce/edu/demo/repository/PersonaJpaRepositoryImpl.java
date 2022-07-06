@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
@@ -46,6 +47,30 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository{
 		Persona persona=this.buscarId(id);
 		LOGGER.info("Se ha eliminado el Persona: "+persona);
 		this.entityManager.remove(persona);
+	}
+
+	@Override
+	public Persona buscarPorCedula(String cedula) {
+		// TODO Auto-generated method stub
+		//SELECT * FROM persona where pers_cedula='1720757101';
+		Query jpqlQuery=this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.cedula = :datoCedula");
+		jpqlQuery.setParameter("datoCedula", cedula);
+		
+		return (Persona)jpqlQuery.getSingleResult();//Este devuelve un objeto de tipo persona;
+	}
+
+	@Override
+	public List<Persona> buscarApellido(String apellido) {
+		// TODO Auto-generated method stub
+		Query myQuery=this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.apellido = :datoApellido");
+		myQuery.setParameter("datoApellido", apellido);
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Persona> buscarGenero(String genero) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

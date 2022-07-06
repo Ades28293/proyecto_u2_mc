@@ -14,5 +14,9 @@ public interface IPersonaJpaService {
 
 	public Persona buscar(int id);
 	
+	public Persona buscarPorCedula(String cedula);
+	
+	public  List<Persona> buscarApellido(String apellido);
+	
 	
 }

@@ -35,7 +35,21 @@ public class ProyectoU2McApplication implements CommandLineRunner{
 		
 		//LOGGER.info("Dato con Jpa: "+this.iPersonaJpaService.buscarPorCedula("1720757101"))
 
-		List<Persona> listaPersona=this.iPersonaJpaService.buscarApellido("Perez");
+//		List<Persona> listaPersona=this.iPersonaJpaService.buscarApellido("Perez");
+//		for(Persona item:listaPersona ) {
+//			
+//			LOGGER.info("Persona:"+ item);
+//		}
+		
+		
+//		List<Persona> listaPersona=this.iPersonaJpaService.buscarGenero("F");
+//		for(Persona item:listaPersona ) {
+//			
+//			LOGGER.info("Persona:"+ item);
+//		}
+		
+		
+		List<Persona> listaPersona=this.iPersonaJpaService.buscarNombre("Pepito");
 		for(Persona item:listaPersona ) {
 			
 			LOGGER.info("Persona:"+ item);
@@ -43,10 +57,10 @@ public class ProyectoU2McApplication implements CommandLineRunner{
 		
 		Persona per=new Persona();
 		//per.setId(1);
-		per.setNombre("Jose");
-		per.setApellido("Perez");
-		per.setGenero("M");
-		per.setCedula("1720757102");
+		per.setNombre("Juana");
+		per.setApellido("Aguirre");
+		per.setGenero("F");
+		per.setCedula("1720757432");
 		
 		//Guardar
 		//this.iPersonaJpaService.guardar(per);

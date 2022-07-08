@@ -20,6 +20,7 @@ public interface IPersonaJpaRepository {
 	
 	public List<Persona> buscarGenero(String genero);
 	
+	public List<Persona> buscarNombre(String nombre);
 	
 
 }

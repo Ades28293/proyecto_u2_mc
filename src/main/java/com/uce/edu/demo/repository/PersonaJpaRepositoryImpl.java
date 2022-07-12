@@ -116,6 +116,38 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 
 		return myQuery.getResultList();
 	}
+	
+	@Override
+	public List<Persona> buscarPorGeneroTyped(String genero) {
+		// TODO Auto-generated method stub
+		Query myQuery = this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.genero = :datoGenero",
+				Persona.class);
+		myQuery.setParameter("datoGenero", genero);
+
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Persona>buscarPorGeneroNamed(String genero) {
+		// TODO Auto-generated method stub
+		Query myQuery = this.entityManager.createNamedQuery("Persona.buscarPorGenero");
+		myQuery.setParameter("datoGenero", genero);
+
+		return  myQuery.getResultList();
+	}
+
+	@Override
+	public List<Persona> buscarPorGeneroTypedNamed(String genero) {
+		// TODO Auto-generated method stub
+
+		TypedQuery<Persona> myQuery = this.entityManager.createNamedQuery("Persona.buscarPorGenero", Persona.class);
+		myQuery.setParameter("datoGenero", genero);
+
+		return myQuery.getResultList();
+	}
+	
+	
+	
 
 	@Override
 	public List<Persona> buscarNombre(String nombre) {
@@ -145,5 +177,40 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 
 		return myQuery.executeUpdate();
 	}
+
+	@Override
+	public Persona buscarPorCedulaApellidoTyped(String cedula, String apellido) {
+		// TODO Auto-generated method stub
+		
+		TypedQuery<Persona> myQuery= this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.cedula= :datoCedula AND p.apellido= :datoApellido", Persona.class);
+		myQuery.setParameter("datoCedula", cedula);
+		myQuery.setParameter("datoApellido", apellido);
+		
+		return myQuery.getSingleResult();
+		
+	}
+
+	@Override
+	public Persona buscarPorCedulaApellidoNamed(String cedula, String apellido) {
+		// TODO Auto-generated method stub
+		Query myQuery=this.entityManager.createNamedQuery("Persona.buscarCedulaApellido");
+		myQuery.setParameter("datoCedula", cedula);
+		myQuery.setParameter("datoApellido", apellido);
+		
+		return (Persona) myQuery.getSingleResult();
+	}
+
+	@Override
+	public Persona buscarPorCedulaApellidoTypedNamed(String cedula, String apellido) {
+		// TODO Auto-generated method stub
+		TypedQuery<Persona> myQuery = this.entityManager.createNamedQuery("Persona.buscarCedulaApellido",
+				Persona.class);
+		myQuery.setParameter("datoCedula", cedula);
+		myQuery.setParameter("datoApellido", apellido);
+
+		return myQuery.getSingleResult();
+	}
+
+	
 
 }

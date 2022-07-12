@@ -12,9 +12,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "persona")
-
 @NamedQuery(name = "Persona.buscarPorCedula", query = "SELECT p FROM Persona p WHERE p.cedula = :datoCedula")
 @NamedQuery(name = "Persona.buscarNombreApellido", query = "SELECT p FROM Persona p WHERE p.nombre= :datoNombre AND p.apellido= :datoApellido")
+@NamedQuery(name="Persona.buscarPorGenero",query="SELECT p FROM Persona p WHERE p.genero = :datoGenero")
+@NamedQuery(name = "Persona.buscarCedulaApellido", query = "SELECT p FROM Persona p WHERE p.cedula= :datoCedula AND p.apellido= :datoApellido")
 
 /*
  * @NamedQueries({

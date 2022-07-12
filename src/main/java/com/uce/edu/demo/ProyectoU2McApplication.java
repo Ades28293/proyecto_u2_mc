@@ -44,49 +44,37 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+
+		// Deber
+		// 1 TypedQuery
+		List<Persona> listapersona1 = this.iPersonaJpaService.buscarPorGeneroTyped("M");
+		for (Persona item : listapersona1) {
+			LOGGER.info("Persona: " + item);
+		}
+
+		// 2 NamedQuery
+		List<Persona> listapersona2 = this.iPersonaJpaService.buscarPorGeneroNamed("M");
+		for (Persona item : listapersona2) {
+			LOGGER.info("Persona: " + item);
+		}
+		// 3 TypedQuery y NamedQuery
+		List<Persona> listapersona3 = this.iPersonaJpaService.buscarPorGeneroTypedNamed("M");
+		for (Persona item : listapersona3) {
+			LOGGER.info("Persona: " + item);
+
+		}
+
+		// 1 TypedQuery
+		Persona per1Typed = this.iPersonaJpaService.buscarPorCedulaApellidoTyped("1720757432", "Aguirre");
+		LOGGER.info("Persona Typed: " + per1Typed);
 		
+		// 2 NamedQuery
+		Persona per1Named = this.iPersonaJpaService.buscarPorCedulaApellidoNamed("1720757432", "Aguirre");
+		LOGGER.info("Persona Named: " + per1Named);
 		
-	Persona p1=new Persona();
-	p1.setApellido("Cen");
-	p1.setNombre("Michael");
-	p1.setCedula("1711169183");
-	p1.setGenero("M");
-
-	//this.iPersonaJpaService.guardar(p1);
-	
-	//1 TypedQuery
-	Persona perTyped=this.iPersonaJpaService.buscarPorCedulaTyped("1720757101");
-	LOGGER.info("Persona Typed: "+perTyped);
-	
-	//2 NamedQuery
-	Persona perNamed=this.iPersonaJpaService.buscarPorCedulaNamed("1720757101");
-	LOGGER.info("Persona Named: "+perNamed);
-	
-	
-	//3 TypedQuery y  NamedQuery
-	Persona perTypedNamed=this.iPersonaJpaService.buscarPorCedulaTypedNamed("1720757101");
-	LOGGER.info("Persona TypedNamed: "+perTypedNamed);
-	
-	
-	//4 Varios NamedQuery
-	List<Persona> listapersona=	this.iPersonaJpaService.buscarNombreApellido("Michael", "Cen");
-	
-	for(Persona item:listapersona) {
-		LOGGER.info("Persona: "+ item);
+		// 3 TypedQuery y NamedQuery
+		Persona per1TypedNamed = this.iPersonaJpaService.buscarPorCedulaApellidoTypedNamed("1720757432", "Aguirre");
+		LOGGER.info("Persona TypedNamed: " + per1TypedNamed);
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	}
-
 }

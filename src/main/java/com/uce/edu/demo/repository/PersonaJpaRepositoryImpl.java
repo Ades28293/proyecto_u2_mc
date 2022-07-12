@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
@@ -56,7 +57,34 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 		Query jpqlQuery = this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.cedula = :datoCedula");
 		jpqlQuery.setParameter("datoCedula", cedula);
 
-		return (Persona) jpqlQuery.getSingleResult();// Este devuelve un objeto de tipo persona;
+		return (Persona) jpqlQuery.getSingleResult();// Este devuelve un objeto generico;
+	}
+
+	@Override
+	public Persona buscarPorCedulaTyped(String cedula) {
+		// TODO Auto-generated method stub
+		TypedQuery<Persona> miTypedQuery = this.entityManager
+				.createQuery("SELECT p FROM Persona p WHERE p.cedula = :datoCedula", Persona.class); // MANEJA
+																										// GENERICOS(Tipo
+																										// de dato)
+		miTypedQuery.setParameter("datoCedula", cedula);
+		return miTypedQuery.getSingleResult(); // Este devuelve un objeto persona xq le especificamos
+	}
+
+	@Override
+	public Persona buscarPorCedulaNamed(String cedula) {
+		// TODO Auto-generated method stub
+		Query myQuery = this.entityManager.createNamedQuery("Persona.buscarPorCedula");// Trabaja con Query
+		myQuery.setParameter("datoCedula", cedula);
+		return (Persona) myQuery.getSingleResult();
+	}
+
+	@Override
+	public Persona buscarPorCedulaTypedNamed(String cedula) {
+		// TODO Auto-generated method stub
+		TypedQuery<Persona> myQuery = this.entityManager.createNamedQuery("Persona.buscarPorCedula", Persona.class);
+		myQuery.setParameter("datoCedula", cedula);
+		return myQuery.getSingleResult();
 	}
 
 	@Override
@@ -65,6 +93,19 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 		Query myQuery = this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.apellido = :datoApellido");
 		myQuery.setParameter("datoApellido", apellido);
 		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Persona> buscarNombreApellido(String nombre, String apellido) {
+		// TODO Auto-generated method stub
+
+		TypedQuery<Persona> myQuery = this.entityManager.createNamedQuery("Persona.buscarNombreApellido",
+				Persona.class);
+		myQuery.setParameter("datoNombre", nombre);
+		myQuery.setParameter("datoApellido", apellido);
+
+		return myQuery.getResultList();
+
 	}
 
 	@Override

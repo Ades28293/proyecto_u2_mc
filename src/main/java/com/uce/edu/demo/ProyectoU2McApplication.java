@@ -2,6 +2,7 @@ package com.uce.edu.demo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.uce.edu.demo.correcion.repository.modelo.Vehiculo;
 import com.uce.edu.demo.correcion.service.IMatriculaGestorService;
 import com.uce.edu.demo.correcion.service.IPropietarioService;
 import com.uce.edu.demo.correcion.service.IVehiculoService;
+import com.uce.edu.demo.repository.modelo.Persona;
 import com.uce.edu.demo.service.IPersonaJdbcService;
 import com.uce.edu.demo.service.IPersonaJpaService;
 
@@ -42,28 +44,49 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		
+	Persona p1=new Persona();
+	p1.setApellido("Cen");
+	p1.setNombre("Michael");
+	p1.setCedula("1711169183");
+	p1.setGenero("M");
 
-		Vehiculo v = new Vehiculo();
-		v.setMarca("Ferrary");
-		v.setPlaca("PCT8451");
-		v.setPrecio(new BigDecimal(90000));
-		v.setTipo("L");
+	//this.iPersonaJpaService.guardar(p1);
+	
+	//1 TypedQuery
+	Persona perTyped=this.iPersonaJpaService.buscarPorCedulaTyped("1720757101");
+	LOGGER.info("Persona Typed: "+perTyped);
+	
+	//2 NamedQuery
+	Persona perNamed=this.iPersonaJpaService.buscarPorCedulaNamed("1720757101");
+	LOGGER.info("Persona Named: "+perNamed);
+	
+	
+	//3 TypedQuery y  NamedQuery
+	Persona perTypedNamed=this.iPersonaJpaService.buscarPorCedulaTypedNamed("1720757101");
+	LOGGER.info("Persona TypedNamed: "+perTypedNamed);
+	
+	
+	//4 Varios NamedQuery
+	List<Persona> listapersona=	this.iPersonaJpaService.buscarNombreApellido("Michael", "Cen");
+	
+	for(Persona item:listapersona) {
+		LOGGER.info("Persona: "+ item);
+	}
 
-		this.iVehiculoService.insertar(v);
-
-		Propietario p = new Propietario();
-		p.setNombre("Maria");
-		p.setApellido("Perez");
-		p.setCedula("1720757541");
-		p.setFecha(LocalDateTime.now());
-
-		this.iPropietarioService.crear(p);
-
-		// Actualizar
-		v.setId(4);
-		v.setPlaca("PCT8111");
-		this.iVehiculoService.actualizar(v);
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 
 }

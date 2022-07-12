@@ -26,4 +26,16 @@ public interface IPersonaJpaRepository {
 
 	public int eliminarPorGenero(String genero);
 
+	/////////Typed
+	public Persona buscarPorCedulaTyped(String cedula);
+	public Persona buscarPorCedulaNamed(String cedula);
+	public Persona buscarPorCedulaTypedNamed(String cedula);
+	
+	
+	public List<Persona> buscarNombreApellido(String nombre,String apellido);
+	
+	
+	
+	
+	
 }

@@ -1,8 +1,11 @@
 package com.uce.edu.demo.tarea.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uce.edu.demo.repository.IPersonaJpaRepository;
 import com.uce.edu.demo.tarea.repository.IEstudianteJpaRepository;
 import com.uce.edu.demo.tarea.repository.modelo.Estudiante;
 
@@ -11,6 +14,7 @@ public class EstudianteJpaServiceImpl implements IEstudianteJpaService{
 	@Autowired
 	private IEstudianteJpaRepository iEstudianteJpaRepository;
 
+	
 	@Override
 	public Estudiante buscar(Integer id) {
 		// TODO Auto-generated method stub
@@ -33,6 +37,30 @@ public class EstudianteJpaServiceImpl implements IEstudianteJpaService{
 	public void eliminar(Integer id) {
 		// TODO Auto-generated method stub
 		this.iEstudianteJpaRepository.eliminar(id);
+	}
+
+	@Override
+	public List<Estudiante> buscarPorNombreNative(String nombre) {
+		// TODO Auto-generated method stub
+		return this.iEstudianteJpaRepository.buscarPorNombreNamedNative(nombre);
+	}
+
+	@Override
+	public List<Estudiante> buscarPorNombreNamedNative(String nombre) {
+		// TODO Auto-generated method stub
+		return this.iEstudianteJpaRepository.buscarPorNombreNamedNative(nombre);
+	}
+
+	@Override
+	public List<Estudiante> buscarPorApellidoNative(String apellido) {
+		// TODO Auto-generated method stub
+		return this.iEstudianteJpaRepository.buscarPorApellidoNamedNative(apellido);
+	}
+
+	@Override
+	public List<Estudiante> buscarPorApellidoNamedNative(String apellido) {
+		// TODO Auto-generated method stub
+		return this.iEstudianteJpaRepository.buscarPorApellidoNamedNative(apellido);
 	}
 
 }

@@ -2,25 +2,37 @@ package com.uce.edu.demo.tarea.repository.modelo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.uce.edu.demo.repository.modelo.Persona;
 
 @Entity
 @Table(name= "estudiante")
+@NamedNativeQuery(name="Estudiante.buscarPorNombreNative",query="SELECT * FROM estudiante WHERE estu_nombre= :datoNombre",resultClass=Estudiante.class)
+@NamedNativeQuery(name="Estudiante.buscarPorApellidoNative",query="SELECT * FROM estudiante WHERE estu_apellido= :datoApellido",resultClass=Estudiante.class)
 public class Estudiante {
 	@Id //primary key
-	@Column(name="id")
+	@Column(name="estu_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estu_id_seq") // anotacion de secuencia
+	@SequenceGenerator(name = "estu_id_seq", sequenceName = "estu_id_seq", allocationSize = 1)
 	private Integer id;
 	
-	@Column(name="nombre")
+	@Column(name="estu_nombre")
 	private String nombre;
 	
-	@Column(name="apellido")
+	@Column(name="estu_apellido")
 	private String apellido;
 	
-	@Column(name="edad")
+	@Column(name="estu_edad")
 	private Integer  edad;
 	
+	@Column(name="estu_direccion")
+	private String direccion;
 	//Set y get 
 	public Integer getId() {
 		return id;
@@ -52,7 +64,7 @@ public class Estudiante {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	private String direccion;
+	
 
 	
 	@Override

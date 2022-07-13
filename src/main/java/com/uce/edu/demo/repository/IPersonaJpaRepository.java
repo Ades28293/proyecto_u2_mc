@@ -30,7 +30,9 @@ public interface IPersonaJpaRepository {
 	public Persona buscarPorCedulaTyped(String cedula);
 	public Persona buscarPorCedulaNamed(String cedula);
 	public Persona buscarPorCedulaTypedNamed(String cedula);
-	
+	public Persona buscarPorCedulaNative(String cedula);
+	public Persona buscarPorCedulaNamedNative(String cedula);
+	public Persona buscarPorCedulaCriteriaApi(String cedula);
 	
 	public List<Persona> buscarNombreApellido(String nombre,String apellido);
 	
@@ -38,6 +40,7 @@ public interface IPersonaJpaRepository {
 	public List<Persona> buscarPorGeneroTyped(String genero);
 	public List<Persona> buscarPorGeneroNamed(String genero);
 	public List<Persona> buscarPorGeneroTypedNamed(String genero);
+	
 	
 	
 	public Persona buscarPorCedulaApellidoTyped(String cedula,String apellido);

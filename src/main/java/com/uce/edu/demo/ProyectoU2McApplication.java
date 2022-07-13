@@ -45,36 +45,13 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		// 1 NativeQuery
+		Persona per1Native = this.iPersonaJpaService.buscarPorCedulaNative("1720757101");
+		LOGGER.info("Persona Typed: " + per1Native);
 
-		// Deber
-		// 1 TypedQuery
-		List<Persona> listapersona1 = this.iPersonaJpaService.buscarPorGeneroTyped("M");
-		for (Persona item : listapersona1) {
-			LOGGER.info("Persona: " + item);
-		}
-
-		// 2 NamedQuery
-		List<Persona> listapersona2 = this.iPersonaJpaService.buscarPorGeneroNamed("M");
-		for (Persona item : listapersona2) {
-			LOGGER.info("Persona: " + item);
-		}
-		// 3 TypedQuery y NamedQuery
-		List<Persona> listapersona3 = this.iPersonaJpaService.buscarPorGeneroTypedNamed("M");
-		for (Persona item : listapersona3) {
-			LOGGER.info("Persona: " + item);
-
-		}
-
-		// 1 TypedQuery
-		Persona per1Typed = this.iPersonaJpaService.buscarPorCedulaApellidoTyped("1720757432", "Aguirre");
-		LOGGER.info("Persona Typed: " + per1Typed);
 		
-		// 2 NamedQuery
-		Persona per1Named = this.iPersonaJpaService.buscarPorCedulaApellidoNamed("1720757432", "Aguirre");
-		LOGGER.info("Persona Named: " + per1Named);
-		
-		// 3 TypedQuery y NamedQuery
-		Persona per1TypedNamed = this.iPersonaJpaService.buscarPorCedulaApellidoTypedNamed("1720757432", "Aguirre");
-		LOGGER.info("Persona TypedNamed: " + per1TypedNamed);
+		//2  NamedNativeQuery
+		Persona per1NamedNative = this.iPersonaJpaService.buscarPorCedulaNamedNative("1720757101");
+		LOGGER.info("Persona Typed: " + per1NamedNative);
 	}
 }

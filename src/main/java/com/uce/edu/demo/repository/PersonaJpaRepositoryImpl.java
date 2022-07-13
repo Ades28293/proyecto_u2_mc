@@ -6,6 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
@@ -88,6 +91,41 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 	}
 
 	@Override
+	public Persona buscarPorCedulaNative(String cedula) {
+		// TODO Auto-generated method stub
+		// SQL PURO
+		Query myQuery = this.entityManager.createNativeQuery("SELECT * FROM persona WHERE pers_cedula= :datoCedula",
+				Persona.class);
+		myQuery.setParameter("datoCedula", cedula);
+
+		return (Persona) myQuery.getSingleResult();
+	}
+
+	@Override
+	public Persona buscarPorCedulaNamedNative(String cedula) {
+		// TODO Auto-generated method stub
+		TypedQuery<Persona> myQuery = this.entityManager.createNamedQuery("Persona.buscarPorCedulaNative",
+				Persona.class);
+		myQuery.setParameter("datoCedula", cedula);
+		return myQuery.getSingleResult();
+	}
+
+	@Override
+	public Persona buscarPorCedulaCriteriaApi(String cedula) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder myBuilder = this.entityManager.getCriteriaBuilder();
+		CriteriaQuery<Persona> myQuery = myBuilder.createQuery(Persona.class);
+
+		// Root o FROM se especifica cual es mi tabla principal
+		Root<Persona> personaRoot = myQuery.from(Persona.class);
+
+		TypedQuery<Persona> myQueryFinal = this.entityManager
+				.createQuery(myQuery.select(personaRoot).where(myBuilder.equal(personaRoot.get("cedula"), cedula)));
+
+		return myQueryFinal.getSingleResult();
+	}
+
+	@Override
 	public List<Persona> buscarApellido(String apellido) {
 		// TODO Auto-generated method stub
 		Query myQuery = this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.apellido = :datoApellido");
@@ -116,7 +154,7 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 
 		return myQuery.getResultList();
 	}
-	
+
 	@Override
 	public List<Persona> buscarPorGeneroTyped(String genero) {
 		// TODO Auto-generated method stub
@@ -128,12 +166,12 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 	}
 
 	@Override
-	public List<Persona>buscarPorGeneroNamed(String genero) {
+	public List<Persona> buscarPorGeneroNamed(String genero) {
 		// TODO Auto-generated method stub
 		Query myQuery = this.entityManager.createNamedQuery("Persona.buscarPorGenero");
 		myQuery.setParameter("datoGenero", genero);
 
-		return  myQuery.getResultList();
+		return myQuery.getResultList();
 	}
 
 	@Override
@@ -145,9 +183,6 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 
 		return myQuery.getResultList();
 	}
-	
-	
-	
 
 	@Override
 	public List<Persona> buscarNombre(String nombre) {
@@ -181,22 +216,23 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 	@Override
 	public Persona buscarPorCedulaApellidoTyped(String cedula, String apellido) {
 		// TODO Auto-generated method stub
-		
-		TypedQuery<Persona> myQuery= this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.cedula= :datoCedula AND p.apellido= :datoApellido", Persona.class);
+
+		TypedQuery<Persona> myQuery = this.entityManager.createQuery(
+				"SELECT p FROM Persona p WHERE p.cedula= :datoCedula AND p.apellido= :datoApellido", Persona.class);
 		myQuery.setParameter("datoCedula", cedula);
 		myQuery.setParameter("datoApellido", apellido);
-		
+
 		return myQuery.getSingleResult();
-		
+
 	}
 
 	@Override
 	public Persona buscarPorCedulaApellidoNamed(String cedula, String apellido) {
 		// TODO Auto-generated method stub
-		Query myQuery=this.entityManager.createNamedQuery("Persona.buscarCedulaApellido");
+		Query myQuery = this.entityManager.createNamedQuery("Persona.buscarCedulaApellido");
 		myQuery.setParameter("datoCedula", cedula);
 		myQuery.setParameter("datoApellido", apellido);
-		
+
 		return (Persona) myQuery.getSingleResult();
 	}
 
@@ -210,7 +246,5 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 
 		return myQuery.getSingleResult();
 	}
-
-	
 
 }

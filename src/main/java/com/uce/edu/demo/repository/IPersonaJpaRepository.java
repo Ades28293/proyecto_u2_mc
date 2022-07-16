@@ -33,6 +33,7 @@ public interface IPersonaJpaRepository {
 	public Persona buscarPorCedulaNative(String cedula);
 	public Persona buscarPorCedulaNamedNative(String cedula);
 	public Persona buscarPorCedulaCriteriaApi(String cedula);
+	public List<Persona> buscarDinamicamente(String nombre,String apellido,String genero);
 	
 	public List<Persona> buscarNombreApellido(String nombre,String apellido);
 	
@@ -46,6 +47,8 @@ public interface IPersonaJpaRepository {
 	public Persona buscarPorCedulaApellidoTyped(String cedula,String apellido);
 	public Persona buscarPorCedulaApellidoNamed(String cedula,String apellido);
 	public Persona buscarPorCedulaApellidoTypedNamed(String cedula,String apellido);
+
+	List<Persona> buscarDinamicamentePredicados(String nombre, String apellido, String genero);
 	
 	
 }

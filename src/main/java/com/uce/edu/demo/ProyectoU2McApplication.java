@@ -55,47 +55,37 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 //		Persona per1NamedNative = this.iPersonaJpaService.buscarPorCedulaNamedNative("1720757101");
 //		LOGGER.info("Persona Typed: " + per1NamedNative);
 		
+//		//Criteria Api
+//		Persona per1CriteriaApi = this.iPersonaJpaService.buscarPorCedulaCriteriaApi("1720757101");
+//		LOGGER.info("Persona Criteria Api: " + per1CriteriaApi);
 		
-		Estudiante e1=new Estudiante();
-		e1.setNombre("Maria");
-		e1.setApellido("Magdalena");
-		e1.setEdad(22);
-		e1.setDireccion("Sangolqui");
+		
+		//Criteria Api Dinamicamente
+//		
+//		Persona per1Dinamicamente = this.iPersonaJpaService.buscarDinamicamente("Daniel", "Velez", "M");
+//		LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente);
+		
+//		Persona per1Dinamicamente1 = this.iPersonaJpaService.buscarDinamicamente("Andrea", "Aguirre", "F");
+//		LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente1);
+		
+		List<Persona> per1Dinamicamente=this.iPersonaJpaService.buscarDinamicamente("Daniel", "Velez", "M");
+		for(Persona item:per1Dinamicamente) {
+			LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente);
+		}
+		
+	LOGGER.info("--------------");	
+		List<Persona> per1Dinamicamente1=this.iPersonaJpaService.buscarDinamicamente("Juana", "Aguirre", "F");
+		for(Persona item2:per1Dinamicamente1) {
+			LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente1);
+		}
+		
+		
+		
+		
+		
+		}
+		
 	
-		//this.estudianteJpaService.insertar(e1);
+
 		
-		
-		
-		 //1 NativeQuery
-		List<Estudiante> listaestudiante=	this.estudianteJpaService.buscarPorApellidoNative("Cen");
-		for(Estudiante item:listaestudiante) {
-			LOGGER.info("Estudiante NativeQuery: "+ item);
-		}
-		
-		List<Estudiante> listaestudiante1=	this.estudianteJpaService.buscarPorNombreNative("Maria");
-		for(Estudiante item:listaestudiante1) {
-			LOGGER.info("Estudiante NativeQuery: "+ item);
-		}
-		
-		//2 NamedNativeQuery
-		List<Estudiante> listaestudiante2=	this.estudianteJpaService.buscarPorNombreNamedNative("Michael");
-		for(Estudiante item:listaestudiante) {
-			LOGGER.info("Estudiante NameNativeQuery: "+ item);
-		}
-		
-		
-		List<Estudiante> listaestudiante3=	this.estudianteJpaService.buscarPorApellidoNamedNative("Magdalena");
-		for(Estudiante item:listaestudiante) {
-			LOGGER.info("Estudiante NameNativeQuery: "+ item);
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
 }

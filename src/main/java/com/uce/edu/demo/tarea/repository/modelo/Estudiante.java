@@ -33,9 +33,19 @@ public class Estudiante {
 	
 	@Column(name="estu_direccion")
 	private String direccion;
+	
+	@Column(name="estu_estado")
+	private String estado;
+	
 	//Set y get 
 	public Integer getId() {
 		return id;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -64,14 +74,15 @@ public class Estudiante {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	
-
-	
 	@Override
 	public String toString() {
 		return "Estudiante [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad
-				+ ", direccion=" + direccion + "]";
+				+ ", direccion=" + direccion + ", estado=" + estado + "]";
 	}
+	
+
+	
+	
 	
 	
 	

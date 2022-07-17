@@ -46,41 +46,20 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-//		// 1 NativeQuery
-//		Persona per1Native = this.iPersonaJpaService.buscarPorCedulaNative("1720757101");
-//		LOGGER.info("Persona Typed: " + per1Native);
-//
-//		
-//		//2  NamedNativeQuery
-//		Persona per1NamedNative = this.iPersonaJpaService.buscarPorCedulaNamedNative("1720757101");
-//		LOGGER.info("Persona Typed: " + per1NamedNative);
+
 		
-//		//Criteria Api
-//		Persona per1CriteriaApi = this.iPersonaJpaService.buscarPorCedulaCriteriaApi("1720757101");
-//		LOGGER.info("Persona Criteria Api: " + per1CriteriaApi);
-		
-		
-		//Criteria Api Dinamicamente
-//		
-//		Persona per1Dinamicamente = this.iPersonaJpaService.buscarDinamicamente("Daniel", "Velez", "M");
-//		LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente);
-		
-//		Persona per1Dinamicamente1 = this.iPersonaJpaService.buscarDinamicamente("Andrea", "Aguirre", "F");
-//		LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente1);
-		
-		List<Persona> per1Dinamicamente=this.iPersonaJpaService.buscarDinamicamente("Daniel", "Velez", "M");
-		for(Persona item:per1Dinamicamente) {
+		List<Estudiante> per1Dinamicamente=this.estudianteJpaService.buscarPorNombreApellidoCriteriaApi("Andrea", "Carrera");
+		for(Estudiante item:per1Dinamicamente) {
 			LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente);
 		}
 		
 	LOGGER.info("--------------");	
-		List<Persona> per1Dinamicamente1=this.iPersonaJpaService.buscarDinamicamente("Juana", "Aguirre", "F");
-		for(Persona item2:per1Dinamicamente1) {
-			LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente1);
+		List<Estudiante> per1Dinamicamente1=this.estudianteJpaService.buscarDinamicamentePredicados("Zhong", "Cen", "A");
+		for(Estudiante item2:per1Dinamicamente1) {
+			LOGGER.info("Estudiante Criteria Api Dinamicamente: " + per1Dinamicamente1);
 		}
 		
-		
-		
+
 		
 		
 		}

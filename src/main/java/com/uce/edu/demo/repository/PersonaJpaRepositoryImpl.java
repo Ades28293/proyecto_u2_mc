@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.uce.edu.demo.repository.modelo.Persona;
+import com.uce.edu.demo.repository.modelo.PersonaContadorGenero;
+import com.uce.edu.demo.repository.modelo.PersonaSencilla;
 
 @Repository
 @Transactional
@@ -151,8 +153,6 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 		// pers_apellido='Velez'
 		Predicate predicadoApellido = myCriteria.equal(myTabla.get("apellido"), apellido);
 
-		
-
 		Predicate miPerdicadoFinal = null;
 
 		/// pers_nombre='Pepito' and pers_apellido='Velez'
@@ -188,11 +188,11 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 
 		if (genero.equals("M")) {
 			miPerdicadoFinal = myCriteria.and(predicadoNombre, predicadoApellido);
-			miPerdicadoFinal =myCriteria.and(miPerdicadoFinal,predicadoGenero);
-			
+			miPerdicadoFinal = myCriteria.and(miPerdicadoFinal, predicadoGenero);
+
 		} else {
 			miPerdicadoFinal = myCriteria.and(predicadoNombre, predicadoApellido);
-			miPerdicadoFinal =myCriteria.or(miPerdicadoFinal,predicadoGenero);
+			miPerdicadoFinal = myCriteria.or(miPerdicadoFinal, predicadoGenero);
 		}
 
 		myQuery.select(myTabla).where(miPerdicadoFinal);
@@ -207,6 +207,32 @@ public class PersonaJpaRepositoryImpl implements IPersonaJpaRepository {
 		// TODO Auto-generated method stub
 		Query myQuery = this.entityManager.createQuery("SELECT p FROM Persona p WHERE p.apellido = :datoApellido");
 		myQuery.setParameter("datoApellido", apellido);
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<PersonaSencilla> buscarApellidoSencillo(String apellido) {
+		// TODO Auto-generated method stub
+		TypedQuery<PersonaSencilla> myQuery = this.entityManager.createQuery(
+				"SELECT NEW com.uce.edu.demo.repository.modelo.PersonaSencilla(p.nombre,p.apellido) FROM Persona p WHERE p.apellido = :datoApellido",
+				PersonaSencilla.class);
+		myQuery.setParameter("datoApellido", apellido);
+
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<PersonaContadorGenero> consultarCantidadPorGenero() {
+		// TODO Auto-generated method stub
+		// SELECT pers_genero,count(pers_genero) FROM persona group by (pers_genero)
+		// SELECT p.genero,COUNT(p.genero) FROM Persona p GROUP BY p.genero
+		// SELECT New
+		// com.uce.edu.demo.repository.modelo.PersonaContadorGenero(p.genero,COUNT(p.genero))
+		// FROM Persona p GROUP BY p.genero
+		TypedQuery<PersonaContadorGenero> myQuery = this.entityManager.createQuery(
+				"SELECT New com.uce.edu.demo.repository.modelo.PersonaContadorGenero(p.genero,COUNT(p.genero)) FROM Persona p GROUP BY p.genero",
+				PersonaContadorGenero.class);
+
 		return myQuery.getResultList();
 	}
 

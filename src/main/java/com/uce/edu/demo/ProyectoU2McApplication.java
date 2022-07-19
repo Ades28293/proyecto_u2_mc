@@ -12,6 +12,8 @@ import com.uce.edu.demo.correcion.service.IMatriculaGestorService;
 import com.uce.edu.demo.correcion.service.IPropietarioService;
 import com.uce.edu.demo.correcion.service.IVehiculoService;
 import com.uce.edu.demo.repository.modelo.Persona;
+import com.uce.edu.demo.repository.modelo.PersonaContadorGenero;
+import com.uce.edu.demo.repository.modelo.PersonaSencilla;
 import com.uce.edu.demo.service.IPersonaJdbcService;
 import com.uce.edu.demo.service.IPersonaJpaService;
 import com.uce.edu.demo.tarea.repository.modelo.Estudiante;
@@ -35,7 +37,7 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 
 	@Autowired
 	private IMatriculaGestorService gestorService;
-	
+
 	@Autowired
 	private IEstudianteJpaService estudianteJpaService;
 
@@ -46,25 +48,16 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-
-		
-		List<Estudiante> per1Dinamicamente=this.estudianteJpaService.buscarPorNombreApellidoCriteriaApi("Andrea", "Carrera");
-		for(Estudiante item:per1Dinamicamente) {
-			LOGGER.info("Persona Criteria Api Dinamicamente: " + per1Dinamicamente);
+		List<PersonaSencilla> listaPersona = iPersonaJpaService.buscarApellidoSencillo("Cen");
+		for (PersonaSencilla item2 : listaPersona) {
+			LOGGER.info("Persona Sencilla: " + item2);
 		}
-		
-	LOGGER.info("--------------");	
-		List<Estudiante> per1Dinamicamente1=this.estudianteJpaService.buscarDinamicamentePredicados("Zhong", "Cen", "A");
-		for(Estudiante item2:per1Dinamicamente1) {
-			LOGGER.info("Estudiante Criteria Api Dinamicamente: " + per1Dinamicamente1);
-		}
-		
 
-		
-		
+		List<PersonaContadorGenero> listaPersonaGenero = this.iPersonaJpaService.consultarCantidadPorGenero();
+		for (PersonaContadorGenero item3 : listaPersonaGenero) {
+			LOGGER.info("Genero : " + item3);
 		}
-		
-	
 
-		
+	}
+
 }

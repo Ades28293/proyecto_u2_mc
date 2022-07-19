@@ -109,8 +109,8 @@ public class EstudianteJpaRepositoryImpl implements IEstudianteJpaRepository{
 			Predicate predicadoNombre = myCriteria.equal(personaRoot.get("nombre"), nombre);
 			Predicate predicadoApellido = myCriteria.equal(personaRoot.get("apellido"), apellido);
 			
-			Predicate miPerdicadoFinal= myCriteria.and(predicadoNombre,predicadoApellido);
-			myQuery.select(personaRoot).where(miPerdicadoFinal);
+			Predicate miPredicadoFinal= myCriteria.and(predicadoNombre,predicadoApellido);
+			myQuery.select(personaRoot).where(miPredicadoFinal);
 			
 			TypedQuery<Estudiante> myQueryFinal = this.entityManager.createQuery(myQuery);
 			

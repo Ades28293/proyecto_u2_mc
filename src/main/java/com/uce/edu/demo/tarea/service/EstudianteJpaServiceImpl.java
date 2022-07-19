@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.uce.edu.demo.repository.IPersonaJpaRepository;
 import com.uce.edu.demo.tarea.repository.IEstudianteJpaRepository;
 import com.uce.edu.demo.tarea.repository.modelo.Estudiante;
+import com.uce.edu.demo.tarea.repository.modelo.EstudianteContadorPorEstado;
+import com.uce.edu.demo.tarea.repository.modelo.EstudianteSencillo;
 
 @Service
 public class EstudianteJpaServiceImpl implements IEstudianteJpaService{
@@ -73,6 +75,18 @@ public class EstudianteJpaServiceImpl implements IEstudianteJpaService{
 	public List<Estudiante> buscarDinamicamentePredicados(String nombre, String apellido, String estado) {
 		// TODO Auto-generated method stub
 		return this.iEstudianteJpaRepository.buscarDinamicamentePredicados(nombre, apellido, estado);
+	}
+
+	@Override
+	public List<EstudianteSencillo> buscarApellidoEstado( String estado) {
+		// TODO Auto-generated method stub
+		return this.iEstudianteJpaRepository.buscarApellidoEstado( estado);
+	}
+
+	@Override
+	public List<EstudianteContadorPorEstado> buscarContadorPorEstado() {
+		// TODO Auto-generated method stub
+		return this.iEstudianteJpaRepository.buscarContadorPorEstado();
 	}
 
 }

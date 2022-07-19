@@ -15,141 +15,161 @@ import javax.transaction.Transactional;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
-import com.uce.edu.demo.ProyectoU2McApplication;
-import com.uce.edu.demo.repository.modelo.Persona;
 import com.uce.edu.demo.tarea.repository.modelo.Estudiante;
-
+import com.uce.edu.demo.tarea.repository.modelo.EstudianteContadorPorEstado;
+import com.uce.edu.demo.tarea.repository.modelo.EstudianteSencillo;
 
 @Repository
 @Transactional
-public class EstudianteJpaRepositoryImpl implements IEstudianteJpaRepository{
+public class EstudianteJpaRepositoryImpl implements IEstudianteJpaRepository {
 	private static final Logger LOGGER = Logger.getLogger(EstudianteJpaRepositoryImpl.class);
-	
-	//Interfaz anotacion paa que se inyecte (Manejador de entidades)
-		@PersistenceContext
-		private EntityManager entityManager;
 
-		@Override
-		public Estudiante buscar(Integer id) {
-			// TODO Auto-generated method stub
-			return this.entityManager.find(Estudiante.class, id);
+	// Interfaz anotacion paa que se inyecte (Manejador de entidades)
+	@PersistenceContext
+	private EntityManager entityManager;
+
+	@Override
+	public Estudiante buscar(Integer id) {
+		// TODO Auto-generated method stub
+		return this.entityManager.find(Estudiante.class, id);
+	}
+
+	@Override
+	public void insertar(Estudiante e) {
+		// TODO Auto-generated method stub
+		LOGGER.info("Se ha insertado el Estudiante: " + e);
+		this.entityManager.persist(e);
+
+	}
+
+	@Override
+	public void actualizar(Estudiante e) {
+		// TODO Auto-generated method stub
+		LOGGER.info("Se ha actualizado el Estudiante: " + e);
+		this.entityManager.merge(e);
+	}
+
+	@Override
+	public void eliminar(Integer id) {
+		// TODO Auto-generated method stub
+		Estudiante e = this.buscar(id);
+		LOGGER.info("Se ha eliminado el Estudiante: " + e);
+		this.entityManager.remove(e);
+	}
+
+	@Override
+	public List<Estudiante> buscarPorNombreNative(String nombre) {
+		// TODO Auto-generated method stub
+		// SQL PURO
+		Query myQuery = this.entityManager.createNativeQuery("SELECT * FROM estudiante WHERE estu_nombre= :datoNombre",
+				Estudiante.class);
+		myQuery.setParameter("datoNombre", nombre);
+
+		return (List<Estudiante>) myQuery.getResultList();
+
+	}
+
+	@Override
+	public List<Estudiante> buscarPorNombreNamedNative(String nombre) {
+		// TODO Auto-generated method stub
+		TypedQuery<Estudiante> myQuery = this.entityManager.createNamedQuery("Estudiante.buscarPorNombreNative",
+				Estudiante.class);
+		myQuery.setParameter("datoNombre", nombre);
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Estudiante> buscarPorApellidoNative(String apellido) {
+		Query myQuery = this.entityManager
+				.createNativeQuery("SELECT * FROM estudiante WHERE estu_apellido= :datoApellido", Estudiante.class);
+		myQuery.setParameter("datoApellido", apellido);
+
+		return (List<Estudiante>) myQuery.getResultList();
+	}
+
+	@Override
+	public List<Estudiante> buscarPorApellidoNamedNative(String apellido) {
+		TypedQuery<Estudiante> myQuery = this.entityManager.createNamedQuery("Estudiante.buscarPorApellidoNative",
+				Estudiante.class);
+		myQuery.setParameter("datoApellido", apellido);
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public List<Estudiante> buscarPorNombreApellidoCriteriaApi(String nombre, String apellido) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder myCriteria = this.entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Estudiante> myQuery = myCriteria.createQuery(Estudiante.class);
+
+		Root<Estudiante> personaRoot = myQuery.from(Estudiante.class);
+
+		Predicate predicadoNombre = myCriteria.equal(personaRoot.get("nombre"), nombre);
+		Predicate predicadoApellido = myCriteria.equal(personaRoot.get("apellido"), apellido);
+
+		Predicate miPredicadoFinal = myCriteria.and(predicadoNombre, predicadoApellido);
+		myQuery.select(personaRoot).where(miPredicadoFinal);
+
+		TypedQuery<Estudiante> myQueryFinal = this.entityManager.createQuery(myQuery);
+
+		return myQueryFinal.getResultList();
+	}
+
+	@Override
+	public List<Estudiante> buscarDinamicamentePredicados(String nombre, String apellido, String estado) {
+		// TODO Auto-generated method stub
+		CriteriaBuilder myCriteria = this.entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Estudiante> myQuery = myCriteria.createQuery(Estudiante.class);
+
+		Root<Estudiante> myTabla = myQuery.from(Estudiante.class);
+
+		Predicate predicadoNombre = myCriteria.equal(myTabla.get("nombre"), nombre);
+
+		Predicate predicadoApellido = myCriteria.equal(myTabla.get("apellido"), apellido);
+
+		Predicate predicadoEstado = myCriteria.equal(myTabla.get("estado"), estado);
+
+		Predicate miPerdicadoFinal = null;
+
+		if (estado.equals("A")) {
+			miPerdicadoFinal = myCriteria.and(predicadoNombre, predicadoApellido);
+			miPerdicadoFinal = myCriteria.and(miPerdicadoFinal, predicadoEstado);
+
+		} else {
+			miPerdicadoFinal = myCriteria.and(predicadoNombre, predicadoApellido);
+			miPerdicadoFinal = myCriteria.or(miPerdicadoFinal, predicadoEstado);
 		}
 
-		@Override
-		public void insertar(Estudiante e) {
-			// TODO Auto-generated method stub
-			LOGGER.info("Se ha insertado el Estudiante: "+e);
-			this.entityManager.persist(e);
-			
-		}
+		myQuery.select(myTabla).where(miPerdicadoFinal);
 
-		@Override
-		public void actualizar(Estudiante e) {
-			// TODO Auto-generated method stub
-			LOGGER.info("Se ha actualizado el Estudiante: "+e);
-			this.entityManager.merge(e);
-		}
+		TypedQuery<Estudiante> myQueryFinal = this.entityManager.createQuery(myQuery);
 
-		@Override
-		public void eliminar(Integer id) {
-			// TODO Auto-generated method stub
-			Estudiante e=this.buscar(id);
-			LOGGER.info("Se ha eliminado el Estudiante: "+e);
-			this.entityManager.remove(e);
-		}
+		return myQueryFinal.getResultList();
+	}
 
-		@Override
-		public List<Estudiante> buscarPorNombreNative(String nombre) {
-			// TODO Auto-generated method stub
-			// SQL PURO
-			Query myQuery = this.entityManager.createNativeQuery("SELECT * FROM estudiante WHERE estu_nombre= :datoNombre",
-					Estudiante.class);
-			myQuery.setParameter("datoNombre", nombre);
+	@Override
+	public List<EstudianteSencillo> buscarApellidoEstado(String estado) {
+		// TODO Auto-generated method stub
 
-			return (List<Estudiante>) myQuery.getResultList();
-			
-			
-		}
+		TypedQuery<EstudianteSencillo> myQuery = this.entityManager.createQuery(
+				"SELECT NEW com.uce.edu.demo.tarea.repository.modelo.EstudianteSencillo(e.nombre,e.apellido,e.estado) FROM Estudiante e WHERE e.estado = :datoEstado",
+				EstudianteSencillo.class);
 
-		@Override
-		public List<Estudiante> buscarPorNombreNamedNative(String nombre) {
-			// TODO Auto-generated method stub
-			TypedQuery<Estudiante> myQuery = this.entityManager.createNamedQuery("Estudiante.buscarPorNombreNative",
-					Estudiante.class);
-			myQuery.setParameter("datoNombre", nombre);
-			return myQuery.getResultList();
-		}
+		myQuery.setParameter("datoEstado", estado);
 
-		@Override
-		public List<Estudiante> buscarPorApellidoNative(String apellido) {
-			Query myQuery = this.entityManager.createNativeQuery("SELECT * FROM estudiante WHERE estu_apellido= :datoApellido",
-					Estudiante.class);
-			myQuery.setParameter("datoApellido", apellido);
+		return myQuery.getResultList();
+	}
 
-			return (List<Estudiante>) myQuery.getResultList();
-		}
+	@Override
+	public List<EstudianteContadorPorEstado> buscarContadorPorEstado() {
+		// TODO Auto-generated method stub
+		TypedQuery<EstudianteContadorPorEstado> myQuery = this.entityManager.createQuery(
+				"SELECT New com.uce.edu.demo.tarea.repository.modelo.EstudianteContadorPorEstado(e.estado,COUNT(e.estado)) FROM Estudiante e GROUP BY e.estado",
+				EstudianteContadorPorEstado.class);
 
-		@Override
-		public List<Estudiante> buscarPorApellidoNamedNative(String apellido) {
-			TypedQuery<Estudiante> myQuery = this.entityManager.createNamedQuery("Estudiante.buscarPorApellidoNative",
-					Estudiante.class);
-			myQuery.setParameter("datoApellido", apellido);
-			return myQuery.getResultList();
-		}
+		return myQuery.getResultList();
 
-		@Override
-		public List<Estudiante> buscarPorNombreApellidoCriteriaApi(String nombre, String apellido) {
-			// TODO Auto-generated method stub
-			CriteriaBuilder myCriteria = this.entityManager.getCriteriaBuilder();
-			
-			CriteriaQuery<Estudiante> myQuery = myCriteria.createQuery(Estudiante.class);
-			
-			Root<Estudiante> personaRoot = myQuery.from(Estudiante.class);
-			
-			Predicate predicadoNombre = myCriteria.equal(personaRoot.get("nombre"), nombre);
-			Predicate predicadoApellido = myCriteria.equal(personaRoot.get("apellido"), apellido);
-			
-			Predicate miPredicadoFinal= myCriteria.and(predicadoNombre,predicadoApellido);
-			myQuery.select(personaRoot).where(miPredicadoFinal);
-			
-			TypedQuery<Estudiante> myQueryFinal = this.entityManager.createQuery(myQuery);
-			
-			return myQueryFinal.getResultList();
-		}
+	}
 
-		@Override
-		public List<Estudiante> buscarDinamicamentePredicados(String nombre, String apellido, String estado) {
-			// TODO Auto-generated method stub
-			CriteriaBuilder myCriteria = this.entityManager.getCriteriaBuilder();
-
-			CriteriaQuery<Estudiante> myQuery = myCriteria.createQuery(Estudiante.class);
-
-			Root<Estudiante> myTabla = myQuery.from(Estudiante.class);
-
-			Predicate predicadoNombre = myCriteria.equal(myTabla.get("nombre"), nombre);
-
-			Predicate predicadoApellido = myCriteria.equal(myTabla.get("apellido"), apellido);
-
-			Predicate predicadoEstado  = myCriteria.equal(myTabla.get("estado"), estado);
-
-			Predicate miPerdicadoFinal = null;
-
-			if (estado.equals("A")) {
-				miPerdicadoFinal = myCriteria.and(predicadoNombre, predicadoApellido);
-				miPerdicadoFinal =myCriteria.and(miPerdicadoFinal,predicadoEstado);
-				
-			} else {
-				miPerdicadoFinal = myCriteria.and(predicadoNombre, predicadoApellido);
-				miPerdicadoFinal =myCriteria.or(miPerdicadoFinal,predicadoEstado);
-			}
-
-			myQuery.select(myTabla).where(miPerdicadoFinal);
-
-			TypedQuery<Estudiante> myQueryFinal = this.entityManager.createQuery(myQuery);
-
-			return myQueryFinal.getResultList();
-		}
-	
-
-	
 }

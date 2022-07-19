@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.uce.edu.demo.repository.modelo.Persona;
 import com.uce.edu.demo.tarea.repository.modelo.Estudiante;
+import com.uce.edu.demo.tarea.repository.modelo.EstudianteContadorPorEstado;
+import com.uce.edu.demo.tarea.repository.modelo.EstudianteSencillo;
 
 public interface IEstudianteJpaRepository {
 
@@ -23,5 +25,10 @@ public interface IEstudianteJpaRepository {
 	
 	public List<Estudiante> buscarPorNombreApellidoCriteriaApi(String nombre,String apellido);
 	public List<Estudiante> buscarDinamicamentePredicados(String nombre, String apellido, String estado);
+	
+	public List<EstudianteSencillo> buscarApellidoEstado( String estado);
+	
+	public List<EstudianteContadorPorEstado> buscarContadorPorEstado();
+	
 	
 }

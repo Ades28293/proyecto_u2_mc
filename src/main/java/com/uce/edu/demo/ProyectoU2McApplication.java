@@ -1,6 +1,6 @@
 package com.uce.edu.demo;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +11,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.uce.edu.demo.correcion.service.IMatriculaGestorService;
 import com.uce.edu.demo.correcion.service.IPropietarioService;
 import com.uce.edu.demo.correcion.service.IVehiculoService;
-import com.uce.edu.demo.repository.modelo.PersonaContadorGenero;
-import com.uce.edu.demo.repository.modelo.PersonaSencilla;
+import com.uce.edu.demo.repository.modelo.Ciudadano;
+import com.uce.edu.demo.repository.modelo.Empleado;
+import com.uce.edu.demo.service.ICiudadanoJpaService;
 import com.uce.edu.demo.service.IPersonaJdbcService;
 import com.uce.edu.demo.service.IPersonaJpaService;
-import com.uce.edu.demo.tarea.repository.modelo.EstudianteContadorPorEstado;
-import com.uce.edu.demo.tarea.repository.modelo.EstudianteSencillo;
 import com.uce.edu.demo.tarea.service.IEstudianteJpaService;
 
 @SpringBootApplication
@@ -41,6 +40,9 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Autowired
 	private IEstudianteJpaService estudianteJpaService;
 
+	@Autowired
+	private ICiudadanoJpaService iCiudadanoJpaService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU2McApplication.class, args);
 	}
@@ -48,16 +50,20 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		List<EstudianteSencillo> listaEstudianteSencillo = this.estudianteJpaService.buscarApellidoEstado("A");
-		for (EstudianteSencillo item4 : listaEstudianteSencillo) {
-			LOGGER.info("Estudiante Sencillo : " + item4);
-		}
 
-		List<EstudianteContadorPorEstado> listaEstudianteContadorPorEstado = this.estudianteJpaService
-				.buscarContadorPorEstado();
-		for (EstudianteContadorPorEstado item5 : listaEstudianteContadorPorEstado) {
-			LOGGER.info("Estudiante Sencillo : " + item5);
-		}
+		Ciudadano c3 = new Ciudadano();
+		c3.setApellido("Cen");
+		c3.setNombre("Michael");
+		
+		Empleado empl3=new Empleado();
+		
+		empl3.setCodigoIes("98794654");
+		empl3.setSalario(new BigDecimal(600));
+		empl3.setCiudadano(c3);
+		
+		c3.setEmpleado(empl3);
+
+		this.iCiudadanoJpaService.insertar(c3);
 
 	}
 

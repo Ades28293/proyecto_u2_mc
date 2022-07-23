@@ -1,8 +1,5 @@
 package com.uce.edu.demo;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,12 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.uce.edu.demo.correcion.service.IMatriculaGestorService;
 import com.uce.edu.demo.correcion.service.IPropietarioService;
 import com.uce.edu.demo.correcion.service.IVehiculoService;
-import com.uce.edu.demo.repository.modelo.Empleado;
+import com.uce.edu.demo.repository.modelo.onetomany.Habitacion;
+import com.uce.edu.demo.repository.modelo.onetomany.Hotel;
 import com.uce.edu.demo.service.ICiudadanoJpaService;
+import com.uce.edu.demo.service.IHabitacionService;
+import com.uce.edu.demo.service.IHotelService;
 import com.uce.edu.demo.service.IPersonaJdbcService;
 import com.uce.edu.demo.service.IPersonaJpaService;
-import com.uce.edu.demo.tarea.repository.modelo.CiudadanoDeber;
-import com.uce.edu.demo.tarea.repository.modelo.Pasaporte;
 import com.uce.edu.demo.tarea.service.ICiudadanoService;
 import com.uce.edu.demo.tarea.service.IEstudianteJpaService;
 
@@ -45,9 +43,15 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 
 	@Autowired
 	private ICiudadanoJpaService iCiudadanoJpaService;
-	
+
 	@Autowired
 	private ICiudadanoService ciudadanoServiceDeber;
+
+	@Autowired
+	private IHotelService hotelService;
+
+	@Autowired
+	private IHabitacionService habitacionService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU2McApplication.class, args);
@@ -56,55 +60,31 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-
-//		Ciudadano c3 = new Ciudadano();
-//		c3.setApellido("Cen");
-//		c3.setNombre("Michael");
-//		
-//		Empleado empl3=new Empleado();
-//		
-//		empl3.setCodigoIes("98794654");
-//		empl3.setSalario(new BigDecimal(600));
-//		empl3.setCiudadano(c3);
-//		
-//		c3.setEmpleado(empl3);
+//		Hotel hotel1 = new Hotel();
 //
-//		this.iCiudadanoJpaService.insertar(c3);
+//		hotel1.setNombre("Hilton Colon UID");
+//		hotel1.setDireccion("Patria y Amazonas");
+//		this.hotelService.insertar(hotel1);
+
+		// Buscar numero del hotel
+		Hotel hote = new Hotel();
+		hote.setId(1);
+
+		Habitacion habi1 = new Habitacion();
+		habi1.setNumero("A234");
+		habi1.setPiso("10");
+		habi1.setTipo("Familiar");
+		habi1.setHotel(hote);
 		
-	
-	//Insertar	
-	CiudadanoDeber ciud1 =new CiudadanoDeber();
-	ciud1.setNombre("Maria");
-	ciud1.setApellido("Hernandez");
-	ciud1.setCedula("17207514314");
-	ciud1.setFechaNacimiento(LocalDateTime.of(1998,9, 28,13,30)); 
-	
-	Pasaporte pasa1 =new Pasaporte();
-	pasa1.setNumero("123465454341");
-	pasa1.setFechaEmision(LocalDateTime.of(2005,9,28,5,30));
-	pasa1.setFechaCaducidad(LocalDateTime.of(2016,9,28,5,30));
-	pasa1.setCiudadano(ciud1);
-	
-	ciud1.setPasaporte(pasa1);
-	
-	this.ciudadanoServiceDeber.insertar(ciud1);
-	
-	
-	//Actualizar
-	CiudadanoDeber ciud2 =new CiudadanoDeber();
-	ciud2.setId(3);
-	ciud2.setNombre("Juan");
-	ciud2.setApellido("Cen");
-	ciud2.setCedula("1720757102");
-	ciud2.setFechaNacimiento(LocalDateTime.of(1999,9, 28,13,30)); 
-	this.ciudadanoServiceDeber.actualizar(ciud1);
-	
-	//Buscar
-	 LOGGER.info("Ciudadano: "+this.ciudadanoServiceDeber.buscarId(3));
-	
-	 //Eliminar
-	 this.ciudadanoServiceDeber.eliminar(5);
+		Habitacion habi2 = new Habitacion();
+		habi2.setNumero("A235");
+		habi2.setPiso("1");
+		habi2.setTipo("Matrimonial");
+		habi2.setHotel(hote);
 		
+		
+		this.habitacionService.insertar(habi1);
+		this.habitacionService.insertar(habi2);
 
 	}
 

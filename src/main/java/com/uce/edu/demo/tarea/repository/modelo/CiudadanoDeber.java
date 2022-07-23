@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.uce.edu.demo.repository.modelo.Empleado;
 @Entity
 @Table(name = "ciudadano")
 public class CiudadanoDeber {

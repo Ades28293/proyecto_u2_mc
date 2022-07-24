@@ -16,8 +16,11 @@ import com.uce.edu.demo.service.IHabitacionService;
 import com.uce.edu.demo.service.IHotelService;
 import com.uce.edu.demo.service.IPersonaJdbcService;
 import com.uce.edu.demo.service.IPersonaJpaService;
+import com.uce.edu.demo.tarea.repository.modelo.Medico;
 import com.uce.edu.demo.tarea.service.ICiudadanoService;
 import com.uce.edu.demo.tarea.service.IEstudianteJpaService;
+import com.uce.edu.demo.tarea.service.IMedicoService;
+import com.uce.edu.demo.tarea.service.IRecetaMedicaService;
 
 @SpringBootApplication
 public class ProyectoU2McApplication implements CommandLineRunner {
@@ -52,7 +55,13 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 
 	@Autowired
 	private IHabitacionService habitacionService;
-
+	
+	@Autowired
+	private IMedicoService iMedicoService;
+	
+	@Autowired
+	private IRecetaMedicaService iRecetaMedicaService;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU2McApplication.class, args);
 	}
@@ -60,31 +69,30 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-//		Hotel hotel1 = new Hotel();
-//
-//		hotel1.setNombre("Hilton Colon UID");
-//		hotel1.setDireccion("Patria y Amazonas");
-//		this.hotelService.insertar(hotel1);
-
-		// Buscar numero del hotel
-		Hotel hote = new Hotel();
-		hote.setId(1);
-
-		Habitacion habi1 = new Habitacion();
-		habi1.setNumero("A234");
-		habi1.setPiso("10");
-		habi1.setTipo("Familiar");
-		habi1.setHotel(hote);
+		//Insertar
+		Medico medi=new Medico();
+		medi.setNombre("Estefania");
+		medi.setApellido("Lopez");
 		
-		Habitacion habi2 = new Habitacion();
-		habi2.setNumero("A235");
-		habi2.setPiso("1");
-		habi2.setTipo("Matrimonial");
-		habi2.setHotel(hote);
+		this.iMedicoService.insertar(medi);
+		
+		//Actualizar
+		Medico medi2=new Medico();
+		medi2.setId(1);
+		medi2.setNombre("Michael");
+		medi2.setApellido("Cen");
+		this.iMedicoService.actualizar(medi2);
+		
+		//Buscar
+		LOGGER.info("Medico: "+this.iMedicoService.buscar(2));
+		
+		//Elimina
+		this.iMedicoService.eliminar(2);
 		
 		
-		this.habitacionService.insertar(habi1);
-		this.habitacionService.insertar(habi2);
+		
+		
+		
 
 	}
 

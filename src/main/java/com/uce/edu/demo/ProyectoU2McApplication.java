@@ -9,6 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.uce.edu.demo.cajero.repository.modelo.DetalleFactura;
+import com.uce.edu.demo.cajero.repository.modelo.Factura;
+import com.uce.edu.demo.cajero.service.IFacturaService;
 import com.uce.edu.demo.correcion.service.IMatriculaGestorService;
 import com.uce.edu.demo.correcion.service.IPropietarioService;
 import com.uce.edu.demo.correcion.service.IVehiculoService;
@@ -86,6 +89,8 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Autowired
 	private ILibro2Autor2Service autor2Service2;
 	
+	@Autowired
+	private IFacturaService facturaService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoU2McApplication.class, args);
@@ -94,64 +99,21 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+	Factura fact= this.facturaService.consultar(1);
+
+	LOGGER.info(fact.getNumero());
+	LOGGER.info("Fecha: "+fact.getFecha());	
+	LOGGER.info("Cliente: "+fact.getCliente().getNumeroTarjeta());	
 	
-
-		Autor2 auto2=new Autor2();
-		auto2.setNombre("Miguel de Cervantes");
-		
-		Autor2 auto3=new Autor2();
-		auto3.setNombre("Juana Velez");
-			
-
-		Autor2 auto4=new Autor2();
-		auto4.setNombre("María Juana");
-		
-		this.autor2Service.insertar(auto2);
-		this.autor2Service.insertar(auto3);
-		this.autor2Service.insertar(auto4);
-			
-		
-		Libro2 libro2 = new Libro2();
-		libro2.setTitulo("Odisea");
-		libro2.setCantidadPaginas(250);
-		
-		Libro2 libro3 = new Libro2();
-		libro3.setTitulo("Los 7 cerditos");
-		libro3.setCantidadPaginas(250);
-		
-		Libro2 libro4 = new Libro2();
-		libro4.setTitulo("JPA");
-		libro4.setCantidadPaginas(250);
-		
-		this.libro2Service.insertar(libro2);
-		this.libro2Service.insertar(libro3);
-		this.libro2Service.insertar(libro4);
-		
-		Libro2Autor2 libro2Autor2 =new Libro2Autor2();
-		libro2Autor2.setAutor2(auto4);
-		libro2Autor2.setLibro2(libro2);
-		
-		
-		
-		Libro2Autor2 libro2Autor3 =new Libro2Autor2();
-		libro2Autor3.setAutor2(auto3);
-		libro2Autor3.setLibro2(libro2);
-		
-		
-		Libro2Autor2 libro2Autor4 =new Libro2Autor2();
-		libro2Autor4.setAutor2(auto2);
-		libro2Autor4.setLibro2(libro4);
-		
-		
-		Libro2Autor2 libro2Autor5 =new Libro2Autor2();
-		libro2Autor5.setAutor2(auto2);
-		libro2Autor5.setLibro2(libro4);
-		
-		this.autor2Service2.insertar(libro2Autor2);
-		this.autor2Service2.insertar(libro2Autor3);
-		this.autor2Service2.insertar(libro2Autor4);
-		this.autor2Service2.insertar(libro2Autor5);
-		
+	List<DetalleFactura> detalles=fact.getDetalles();
+	for(DetalleFactura deta:detalles) {
+		LOGGER.info("Detalle: "+ deta);
+	}
+	
+	
+	
+	
+	
 	}
 
 }

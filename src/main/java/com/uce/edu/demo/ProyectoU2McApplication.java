@@ -99,7 +99,7 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-	Factura fact= this.facturaService.consultar(1);
+/*	Factura fact= this.facturaService.consultar(1);
 
 	LOGGER.info(fact.getNumero());
 	LOGGER.info("Fecha: "+fact.getFecha());	
@@ -109,7 +109,7 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	for(DetalleFactura deta:detalles) {
 		LOGGER.info("Detalle: "+ deta);
 	}
-	
+	*/
 	
 	
 	

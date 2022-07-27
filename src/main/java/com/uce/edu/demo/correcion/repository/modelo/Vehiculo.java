@@ -1,75 +1,39 @@
 package com.uce.edu.demo.correcion.repository.modelo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 @Entity
-@Table(name= "vehiculo")
+@Table(name = "vehiculo")
 public class Vehiculo {
-	@Id //primary key
-	@Column(name="vehi_id")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator = "vehi_id_seq")//anotacion de secuencia
-	@SequenceGenerator(name="vehi_id_seq",sequenceName="vehi_id_seq",allocationSize = 1)
+	@Id // primary key
+	@Column(name = "vehi_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vehi_id_seq") // anotacion de secuencia
+	@SequenceGenerator(name = "vehi_id_seq", sequenceName = "vehi_id_seq", allocationSize = 1)
 	private Integer id;
-	
-	@Column(name="vehi_marca")
+
+	@Column(name = "vehi_marca")
 	private String marca;
-	
-	@Column(name="vehi_placa")
+
+	@Column(name = "vehi_placa")
 	private String placa;
-	
-	@Column(name="vehi_tipo")
+
+	@Column(name = "vehi_tipo")
 	private String tipo;
-	
-	@Column(name="vehi_precio")
+
+	@Column(name = "vehi_precio")
 	private BigDecimal precio;
-	
-	//Set y Get
-	public String getMarca() {
-		return marca;
-	}
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-	public String getPlaca() {
-		return placa;
-	}
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	public BigDecimal getPrecio() {
-		return precio;
-	}
-	public void setPrecio(BigDecimal precio) {
-		this.precio = precio;
-	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
-	@Override
-	public String toString() {
-		return "Vehiculo [id=" + id + ", marca=" + marca + ", placa=" + placa + ", tipo=" + tipo + ", precio=" + precio
-				+ "]";
-	}
-	
-	
-	
-	
+
+	@OneToMany(mappedBy = "vehiculo")
+	private List<Matricula> matriculas;
 
 }

@@ -111,7 +111,7 @@ public class ProyectoU2McApplication implements CommandLineRunner {
 	}
 	*/
 	
-	
+	LOGGER.info("hola mundo ");
 	
 	
 	}
